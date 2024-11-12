@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-section, .weather-section {
+            margin-top: 20px;
+        }
+        .graph-section {
+            margin-top: 30px;
+        }
+        .graph-section img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+        <div class="form-section">
+            <form method="POST">
+                <label for="city">Enter City:</label>
+                <input type="text" id="city" name="city" required>
+                <button type="submit">Get Weather</button>
+            </form>
+        </div>
+
+        {% if weather_data %}
+            <div class="weather-section">
+                {% if weather_data.error %}
+                    <p style="color: red;">{{ weather_data.error }}</p>
+                {% else %}
+                    <h2>Weather Forecast for the Next 24 Hours</h2>
+                    <div class="graph-section">
+                        <h3>Temperature Forecast</h3>
+                        {% if graph_filenames.temperature %}
+                            <img src="{{ graph_filenames.temperature }}" alt="Temperature Forecast">
+                        {% else %}
+                            <p>Temperature data not available</p>
+                        {% endif %}
+
+                        <h3>Cloud Cover Forecast</h3>
+                        {% if graph_filenames.cloud_cover %}
+                            <img src="{{ graph_filenames.cloud_cover }}" alt="Cloud Cover Forecast">
+                        {% else %}
+                            <p>Cloud cover data not available</p>
+                        {% endif %}
+
+                        <h3>Wind Speed Forecast</h3>
+                        {% if graph_filenames.wind_speed %}
+                            <img src="{{ graph_filenames.wind_speed }}" alt="Wind Speed Forecast">
+                        {% else %}
+                            <p>Wind speed data not available</p>
+                        {% endif %}
+
+                        <h3>Precipitation Forecast</h3>
+                        {% if graph_filenames.precipitation %}
+                            <img src="{{ graph_filenames.precipitation }}" alt="Precipitation Forecast">
+                        {% else %}
+                            <p>Precipitation data not available</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
